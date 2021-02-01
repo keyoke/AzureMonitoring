@@ -1,0 +1,40 @@
+{
+    "name": "disallow-app-insights-classic",
+    "properties": {
+        "displayName": "Disallow Application Insights Classic Mode",
+        "description": "This policy prevents deployment of Application Insights resources configured in classic mode.",
+        "mode": "All",
+        "parameters": {
+            "effect": {
+                "type": "String",
+                "metadata": {
+                    "displayName": "Effect",
+                    "description": "Enable or disable the execution of the policy."
+                },
+                "allowedValues": [
+                    "Audit",
+                    "Deny",
+                    "Disabled"
+                ],
+                "defaultValue": "Deny"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Insights/components"
+                    },
+                    {
+                        "field": "Microsoft.Insights/components/WorkspaceResourceId",
+                        "exists": "false"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "[parameters('effect')]"
+            }
+        }
+    }
+}
