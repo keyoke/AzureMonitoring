@@ -1,0 +1,195 @@
+{
+    "displayName": "Deploy Dynatrace OneAgent VM Extension for Windows VMs.",
+    "mode": "Indexed",
+    "description": "This policy deploys Dynatrace OneAgent VM Extensions on Windows VMs in specific regions, and connects to the selected Dynatrace tenant.",
+    "metadata": {
+        "category": "Compute"
+    },
+    "parameters": {
+        "dynatracePaasToken": {
+            "type": "string",
+            "metadata": {
+                "displayName": "Dynatrace Paas Token",
+                "description": "Dynatrace Paas Token from your Environment."
+            }
+        },
+        "dynatraceEnvironmentID": {
+            "type": "string",
+            "metadata": {
+                "displayName": "Dynatrace Environment Id",
+                "description": "Enter your Dynatrace Environment Id",
+                "assignPermissions": true
+            }
+        },
+        "dynatraceServerUrl": {
+            "type": "string",
+            "metadata": {
+                "displayName": "Dynatrace Server Url",
+                "description": "Enter Dynatrace Server Url if required",
+                "assignPermissions": true
+            },
+            "defaultValue": ""
+        },
+        "dynatraceEnableLogAnalytics": {
+            "type": "boolean",
+            "metadata": {
+                "displayName": "Dynatrace Enable Log Analytics",
+                "description": "Enable Dynatrace log analytics",
+                "assignPermissions": true
+            },
+            "defaultValue": false
+        },
+        "dynatraceHostGroup": {
+            "type": "string",
+            "metadata": {
+                "displayName": "Dynatrace Host Group",
+                "description": "Enter Host Group",
+                "assignPermissions": true
+            },
+            "defaultValue": ""
+        },
+        "effect": {
+            "type": "string",
+            "metadata": {
+                "displayName": "Effects",
+                "description": "Enable or disable the execution of the Policy."
+            },
+            "allowedValues": [
+                "DeployIfNotExists",
+                "Disabled"
+            ],
+            "defaultValue": "DeployIfNotExists"
+        },
+        "targetRegions": {
+            "type": "array",
+            "metadata": {
+                "displayName": "Target Regions",
+                "description": "This dictates which regions should be connected to this Dynatrace Environment.",
+                "strongType": "location"
+            }
+        }
+    },
+    "policyRule": {
+        "if": {
+            "allOf": [
+                {
+                    "field": "type",
+                    "equals": "Microsoft.Compute/virtualMachines"
+                },
+                {
+                    "field": "Microsoft.Compute/virtualMachines/storageProfile.osDisk.osType",
+                    "equals": "Windows"
+                },
+                {
+                    "field": "location",
+                    "In": "[parameters('targetRegions')]"
+                }
+            ]
+        },
+        "then": {
+            "effect": "[parameters('effect')]",
+            "details": {
+                "type": "Microsoft.Compute/virtualMachines/extensions",
+                "existenceCondition": {
+                    "allOf": [
+                        {
+                            "field": "Microsoft.Compute/virtualMachines/extensions/type",
+                            "equals": "oneAgentWindows"
+                        },
+                        {
+                            "field": "Microsoft.Compute/virtualMachines/extensions/publisher",
+                            "equals": "dynatrace.ruxit"
+                        }
+                    ]
+                },
+                "roleDefinitionIds": [
+                    "/providers/Microsoft.Authorization/roleDefinitions/9980e02c-c2be-4d73-94e8-173b1dc7cf3c"
+                ],
+                "deployment": {
+                    "properties": {
+                        "mode": "incremental",
+                        "template": {
+                            "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                            "contentVersion": "1.0.0.0",
+                            "parameters": {
+                                "vmName": {
+                                    "type": "string"
+                                },
+                                "location": {
+                                    "type": "string"
+                                },
+                                "dynatracePaasToken": {
+                                    "type": "secureString"
+                                },
+                                "dynatraceEnvironmentID": {
+                                    "type": "string"
+                                },
+                                "dynatraceServerUrl": {
+                                    "type": "string"
+                                },
+                                "dynatraceEnableLogAnalytics": {
+                                    "type": "bool"
+                                },
+                                "dynatraceHostGroup": {
+                                    "type": "string"
+                                }
+                            },
+                            "resources": [
+                                {
+                                    "name": "[concat(parameters('vmName'),'/oneAgentWindows')]",
+                                    "type": "Microsoft.Compute/virtualMachines/extensions",
+                                    "location": "[parameters('location')]",
+                                    "apiVersion": "2021-03-01",
+                                    "properties": {
+                                        "autoUpgradeMinorVersion": true,
+                                        "publisher": "dynatrace.ruxit",
+                                        "type": "oneAgentWindows",
+                                        "typeHandlerVersion": "1.0",
+                                        "settings": {
+                                            "tenantId": "[parameters('dynatraceEnvironmentID')]",
+                                            "server": "[parameters('dynatraceServerUrl')]",
+                                            "enableLogAnalytics": "[parameters('dynatraceEnableLogAnalytics')]",
+                                            "hostGroup": "[parameters('dynatraceHostGroup')]"
+                                        },
+                                        "protectedSettings": {
+                                            "token": "[parameters('dynatracePaasToken')]"
+                                        }
+                                    }
+                                }
+                            ],
+                            "outputs": {
+                                "policy": {
+                                    "type": "string",
+                                    "value": "[concat('Enabled Dynatrace OneAgent for Windows VM', ': ', parameters('vmName'))]"
+                                }
+                            }
+                        },
+                        "parameters": {
+                            "vmName": {
+                                "value": "[field('name')]"
+                            },
+                            "location": {
+                                "value": "[field('location')]"
+                            },
+                            "dynatracePaasToken": {
+                                "value": "[parameters('dynatracePaasToken')]"
+                            },
+                            "dynatraceEnvironmentID": {
+                                "value": "[parameters('dynatraceEnvironmentID')]"
+                            },
+                            "dynatraceServerUrl": {
+                                "value": "[parameters('dynatraceServerUrl')]"
+                            },
+                            "dynatraceEnableLogAnalytics": {
+                                "value": "[parameters('dynatraceEnableLogAnalytics')]"
+                            },
+                            "dynatraceHostGroup": {
+                                "value": "[parameters('dynatraceHostGroup')]"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

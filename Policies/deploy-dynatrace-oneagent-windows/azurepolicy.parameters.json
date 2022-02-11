@@ -1,0 +1,64 @@
+{
+    "dynatracePaasToken": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Dynatrace Paas Token",
+            "description": "Dynatrace Paas Token from your Environment."
+        }
+    },
+    "dynatraceEnvironmentID": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Dynatrace Environment Id",
+            "description": "Enter your Dynatrace Environment Id",
+            "assignPermissions": true
+        }
+    },
+    "dynatraceServerUrl": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Dynatrace Server Url",
+            "description": "Enter Dynatrace Server Url if required",
+            "assignPermissions": true
+        },
+        "defaultValue": ""
+    },
+    "dynatraceEnableLogAnalytics": {
+        "type": "boolean",
+        "metadata": {
+            "displayName": "Dynatrace Enable Log Analytics",
+            "description": "Enable Dynatrace log analytics",
+            "assignPermissions": true
+        },
+        "defaultValue": false
+    },
+    "dynatraceHostGroup": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Dynatrace Host Group",
+            "description": "Enter Host Group",
+            "assignPermissions": true
+        },
+        "defaultValue": ""
+    },
+    "effect": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Effects",
+            "description": "Enable or disable the execution of the Policy."
+        },
+        "allowedValues": [
+            "DeployIfNotExists",
+            "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+    },
+    "targetRegions": {
+        "type": "array",
+        "metadata": {
+            "displayName": "Target Regions",
+            "description": "This dictates which regions should be connected to this Dynatrace Environment.",
+            "strongType": "location"
+        }
+    }
+}
