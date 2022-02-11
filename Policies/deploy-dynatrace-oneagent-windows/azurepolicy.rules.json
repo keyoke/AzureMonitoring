@@ -47,19 +47,19 @@
 							"location": {
 								"type": "string"
 							},
-							"dynatracePaasToken": {
+							"token": {
 								"type": "secureString"
 							},
-							"dynatraceEnvironmentID": {
+							"tenant": {
 								"type": "string"
 							},
-							"dynatraceServerUrl": {
+							"server": {
 								"type": "string"
 							},
-							"dynatraceEnableLogAnalytics": {
-								"type": "bool"
+							"enableLogAnalytics": {
+								"type": "string"
 							},
-							"dynatraceHostGroup": {
+							"hostGroup": {
 								"type": "string"
 							}
 						},
@@ -75,13 +75,13 @@
 									"type": "oneAgentWindows",
 									"typeHandlerVersion": "1.0",
 									"settings": {
-										"tenantId": "[parameters('dynatraceEnvironmentID')]",
-										"server": "[parameters('dynatraceServerUrl')]",
-										"enableLogAnalytics": "[parameters('dynatraceEnableLogAnalytics')]",
-										"hostGroup": "[parameters('dynatraceHostGroup')]"
+										"tenantId": "[parameters('tenant')]",
+										"server": "[parameters('server')]",
+										"token": "[parameters('token')]",
+										"enableLogAnalytics": "[parameters('enableLogAnalytics')]",
+										"hostGroup": "[parameters('hostGroup')]"
 									},
 									"protectedSettings": {
-										"token": "[parameters('dynatracePaasToken')]"
 									}
 								}
 							}
@@ -100,20 +100,20 @@
 						"location": {
 							"value": "[field('location')]"
 						},
-						"dynatracePaasToken": {
-							"value": "[parameters('dynatracePaasToken')]"
+						"token": {
+							"value": "[parameters('token')]"
 						},
-						"dynatraceEnvironmentID": {
-							"value": "[parameters('dynatraceEnvironmentID')]"
+						"tenant": {
+							"value": "[parameters('tenant')]"
 						},
-						"dynatraceServerUrl": {
-							"value": "[parameters('dynatraceServerUrl')]"
+						"server": {
+							"value": "[parameters('server')]"
 						},
-						"dynatraceEnableLogAnalytics": {
-							"value": "[parameters('dynatraceEnableLogAnalytics')]"
+						"enableLogAnalytics": {
+							"value": "[parameters('enableLogAnalytics')]"
 						},
-						"dynatraceHostGroup": {
-							"value": "[parameters('dynatraceHostGroup')]"
+						"hostGroup": {
+							"value": "[parameters('hostGroup')]"
 						}
 					}
 				}
