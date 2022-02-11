@@ -1,0 +1,67 @@
+{
+    "token": {
+        "type": "string",
+        "metadata": {
+            "displayName": "API Token",
+            "description": "Your Dynatrace API token."
+        }
+    },
+    "tenant": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Environment ID",
+            "description": "Your Dynatrace environment ID",
+            "assignPermissions": true
+        }
+    },
+    "server": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Server URL",
+            "description": "Optional. Your Dynatrace Managed URL. Only required for Dynatrace Managed. (eg https://abcd.dynatrace-managed.com)",
+            "assignPermissions": true
+        },
+        "defaultValue": ""
+    },
+    "enableLogAnalytics": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Enable Log Analytics",
+            "description": "Enable access to application log-file content on this host for problem analysis",
+            "assignPermissions": true
+        },
+        "allowedValues": [
+            "yes",
+            "no"
+        ]
+    },
+    "hostGroup": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Host Group",
+            "description": "Optional. Assign VM to a host group. Leave empty for no assigned host group.",
+            "assignPermissions": true
+        },
+        "defaultValue": ""
+    },
+    "effect": {
+        "type": "string",
+        "metadata": {
+            "displayName": "Effects",
+            "description": "Enable or disable the execution of the Policy."
+        },
+        "allowedValues": [
+            "DeployIfNotExists",
+            "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+    },
+    "targetRegions": {
+        "type": "array",
+        "metadata": {
+            "displayName": "Target Regions",
+            "description": "This dictates which regions should be connected to this Dynatrace Environment.",
+            "strongType": "location"
+        }
+    }
+}
