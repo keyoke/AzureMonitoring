@@ -1,0 +1,242 @@
+{
+	"if": {
+		"allOf": [
+			{
+				"field": "type",
+				"equals": "Microsoft.Storage/storageAccounts"
+			},
+			{
+				"field": "location",
+				"In": "[parameters('targetRegions')]"
+			}
+		]
+	},
+	"then": {
+		"effect": "[parameters('effect')]",
+		"details": {
+			"type": "Microsoft.Insights/diagnosticSettings",
+			"roleDefinitionIds": [
+				"/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+				"/providers/microsoft.authorization/roleDefinitions/749f88d5-cbae-40b8-bcfc-e573ddc772fa"
+			],
+			"existenceCondition": {
+				"allOf": [
+					{
+						"field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
+						"equals": "True"
+					},
+					{
+						"field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+						"equals": "True"
+					},
+					{
+						"field": "Microsoft.Insights/diagnosticSettings/marketplacePartnerId",
+						"equals": "[parameters('marketplacePartnerId')]"
+					}
+				]
+			},
+			"deployment": {
+				"properties": {
+					"mode": "incremental",
+					"template": {
+						"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+						"contentVersion": "1.0.0.0",
+						"parameters": {
+							"accountName": {
+								"type": "string"
+							},
+							"marketplacePartnerName": {
+								"type": "string"
+							},
+							"marketplacePartnerId": {
+								"type": "string"
+							},
+							"location": {
+								"type": "string"
+							}
+						},
+						"variables": {},
+						"resources": [
+							{
+								"type": "Microsoft.Storage/storageAccounts/blobServices/providers/diagnosticSettings",
+								"apiVersion": "2017-05-01-preview",
+								"name": "[concat(parameters('accountName'), '/default/', 'Microsoft.Insights/', parameters('marketplacePartnerName'))]",
+								"location": "[parameters('location')]",
+								"dependsOn": [],
+								"properties": {
+									"marketplacePartnerId": "[parameters('marketplacePartnerId')]",
+									"metrics": [
+										{
+											"category": "Transaction",
+											"enabled": "True",
+											"retentionPolicy": {
+												"days": 0,
+												"enabled": false
+											},
+											"timeGrain": null
+										}
+									],
+									"logs": [
+										{
+											"category": "StorageRead",
+											"enabled": "True"
+										},
+										{
+											"category": "StorageWrite",
+											"enabled": "True"
+										},
+										{
+											"category": "StorageDelete",
+											"enabled": "True"
+										}
+									]
+								}
+							},
+							{
+								"type": "Microsoft.Storage/storageAccounts/fileServices/providers/diagnosticSettings",
+								"apiVersion": "2017-05-01-preview",
+								"name": "[concat(parameters('accountName'), '/default/', 'Microsoft.Insights/', parameters('marketplacePartnerName'))]",
+								"location": "[parameters('location')]",
+								"dependsOn": [],
+								"properties": {
+									"marketplacePartnerId": "[parameters('marketplacePartnerId')]",
+									"metrics": [
+										{
+											"category": "Transaction",
+											"enabled": "True",
+											"retentionPolicy": {
+												"days": 0,
+												"enabled": false
+											},
+											"timeGrain": null
+										}
+									],
+									"logs": [
+										{
+											"category": "StorageRead",
+											"enabled": "True"
+										},
+										{
+											"category": "StorageWrite",
+											"enabled": "True"
+										},
+										{
+											"category": "StorageDelete",
+											"enabled": "True"
+										}
+									]
+								}
+							},
+							{
+								"type": "Microsoft.Storage/storageAccounts/tableServices/providers/diagnosticSettings",
+								"apiVersion": "2017-05-01-preview",
+								"name": "[concat(parameters('accountName'), '/default/', 'Microsoft.Insights/', parameters('marketplacePartnerName'))]",
+								"location": "[parameters('location')]",
+								"dependsOn": [],
+								"properties": {
+									"marketplacePartnerId": "[parameters('marketplacePartnerId')]",
+									"metrics": [
+										{
+											"category": "Transaction",
+											"enabled": "True",
+											"retentionPolicy": {
+												"days": 0,
+												"enabled": false
+											},
+											"timeGrain": null
+										}
+									],
+									"logs": [
+										{
+											"category": "StorageRead",
+											"enabled": "True"
+										},
+										{
+											"category": "StorageWrite",
+											"enabled": "True"
+										},
+										{
+											"category": "StorageDelete",
+											"enabled": "True"
+										}
+									]
+								}
+							},
+							{
+								"type": "Microsoft.Storage/storageAccounts/queueServices/providers/diagnosticSettings",
+								"apiVersion": "2017-05-01-preview",
+								"name": "[concat(parameters('accountName'), '/default/', 'Microsoft.Insights/', parameters('marketplacePartnerName'))]",
+								"location": "[parameters('location')]",
+								"dependsOn": [],
+								"properties": {
+									"marketplacePartnerId": "[parameters('marketplacePartnerId')]",
+									"metrics": [
+										{
+											"category": "Transaction",
+											"enabled": "True",
+											"retentionPolicy": {
+												"days": 0,
+												"enabled": false
+											},
+											"timeGrain": null
+										}
+									],
+									"logs": [
+										{
+											"category": "StorageRead",
+											"enabled": "True"
+										},
+										{
+											"category": "StorageWrite",
+											"enabled": "True"
+										},
+										{
+											"category": "StorageDelete",
+											"enabled": "True"
+										}
+									]
+								}
+							},
+							{
+								"type": "Microsoft.Storage/storageAccounts/providers/diagnosticSettings",
+								"apiVersion": "2017-05-01-preview",
+								"name": "[concat(parameters('accountName'), '/', 'Microsoft.Insights/', parameters('marketplacePartnerName'))]",
+								"location": "[parameters('location')]",
+								"dependsOn": [],
+								"properties": {
+									"marketplacePartnerId": "[parameters('marketplacePartnerId')]",
+									"metrics": [
+										{
+											"category": "Transaction",
+											"enabled": "True",
+											"retentionPolicy": {
+												"days": 0,
+												"enabled": false
+											},
+											"timeGrain": null
+										}
+									]
+								}
+							}
+						],
+						"outputs": {}
+					},
+					"parameters": {
+						"marketplacePartnerName": {
+							"value": "[parameters('marketplacePartnerName')]"
+						},
+						"marketplacePartnerId": {
+							"value": "[parameters('marketplacePartnerId')]"
+						},
+						"location": {
+							"value": "[field('location')]"
+						},
+						"accountName": {
+							"value": "[field('name')]"
+						}
+					}
+				}
+			}
+		}
+	}
+}

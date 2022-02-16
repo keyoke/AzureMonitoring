@@ -1,0 +1,36 @@
+{
+    "marketplacePartnerName": {
+        "type": "String",
+        "metadata": {
+            "displayName": "Marketplace Partner Name",
+            "description": "The name of the Marketplace partner to which you would like to send Diagnostic Logs."
+        }
+    },
+    "marketplacePartnerId": {
+        "type": "String",
+        "metadata": {
+            "displayName": "Marketplace Partner Id",
+            "description": "The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs."
+        }
+    },
+    "effect": {
+        "type": "String",
+        "metadata": {
+            "displayName": "Effect",
+            "description": "Enable or disable the execution of the policy"
+        },
+        "allowedValues": [
+            "DeployIfNotExists",
+            "Disabled"
+        ],
+        "defaultValue": "DeployIfNotExists"
+    },
+    "targetRegions": {
+        "type": "array",
+        "metadata": {
+            "displayName": "Target Regions",
+            "description": "This dictates which regions should be connected to this Marketplace Partner.",
+            "strongType": "location"
+        }
+    }
+}
