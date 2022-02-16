@@ -112,7 +112,7 @@
                                             "metrics": [
                                                 {
                                                     "category": "Transaction",
-                                                    "enabled": "True",
+                                                    "enabled": "False",
                                                     "retentionPolicy": {
                                                         "days": 0,
                                                         "enabled": false
@@ -147,7 +147,7 @@
                                             "metrics": [
                                                 {
                                                     "category": "Transaction",
-                                                    "enabled": "True",
+                                                    "enabled": "False",
                                                     "retentionPolicy": {
                                                         "days": 0,
                                                         "enabled": false
@@ -182,7 +182,7 @@
                                             "metrics": [
                                                 {
                                                     "category": "Transaction",
-                                                    "enabled": "True",
+                                                    "enabled": "False",
                                                     "retentionPolicy": {
                                                         "days": 0,
                                                         "enabled": false
@@ -217,7 +217,7 @@
                                             "metrics": [
                                                 {
                                                     "category": "Transaction",
-                                                    "enabled": "True",
+                                                    "enabled": "False",
                                                     "retentionPolicy": {
                                                         "days": 0,
                                                         "enabled": false
@@ -252,7 +252,7 @@
                                             "metrics": [
                                                 {
                                                     "category": "Transaction",
-                                                    "enabled": "True",
+                                                    "enabled": "False",
                                                     "retentionPolicy": {
                                                         "days": 0,
                                                         "enabled": false
