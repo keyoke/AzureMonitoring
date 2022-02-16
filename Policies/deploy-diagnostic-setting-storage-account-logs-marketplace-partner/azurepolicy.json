@@ -67,7 +67,7 @@
                         "allOf": [
                             {
                                 "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
-                                "equals": "True"
+                                "equals": "False"
                             },
                             {
                                 "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
